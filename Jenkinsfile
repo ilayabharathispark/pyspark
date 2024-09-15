@@ -16,8 +16,11 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                // Clone your GitHub repository
-                git branch: 'pyspark', url: 'https://github.com/ilayabharathispark/pyspark.git'
+                script {
+                    def branchName = params.BRANCH_NAME
+                    // Clone the selected branch from your GitHub repository
+                    git branch: branchName, url: 'https://github.com/ilayabharathispark/pyspark.git'
+                }
             }
         }
 
