@@ -36,8 +36,8 @@ pipeline {
                     ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${TARGET_DIR}/script'
 
                     # Copy the 'dag' and 'script' folders from the Jenkins workspace to the cluster
-                    scp -r ${WORKSPACE}/dag ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/dag
-                    scp -r ${WORKSPACE}/script ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/script
+                    scp -r ${WORKSPACE}/dags ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/dag
+                    scp -r ${WORKSPACE}/scripts ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/script
                     """
                 }
             }
