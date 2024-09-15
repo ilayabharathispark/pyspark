@@ -1,5 +1,3 @@
-
-
 pipeline {
     agent any
 
@@ -9,6 +7,7 @@ pipeline {
         TARGET_DIR = '/home/ilaya/jenkins_test/' // Replace with the target directory on your cluster
         SSH_CREDENTIALS_ID = 'a6026357-ee3d-4415-9c8a-4f392a72b161' // Replace with your SSH credentials ID
     }
+
     stages {
         stage('Clone repository') {
             steps {
@@ -17,7 +16,6 @@ pipeline {
             }
         }
 
-    stages {
         stage('Deploy DAG and Script') {
             steps {
                 sshagent([SSH_CREDENTIALS_ID]) {
@@ -35,26 +33,3 @@ pipeline {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
