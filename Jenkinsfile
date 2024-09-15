@@ -16,6 +16,17 @@ pipeline {
             }
         }
 
+        stage('Add Host Key') {
+            steps {
+                script {
+                    sh """
+                    # Add the cluster's host key to the known_hosts file
+                    ssh-keyscan -H ${CLUSTER_HOST} >> ~/.ssh/known_hosts
+                    """
+                }
+            }
+        }
+
         stage('Deploy DAG and Script') {
             steps {
                 sshagent([SSH_CREDENTIALS_ID]) {
