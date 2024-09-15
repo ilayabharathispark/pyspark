@@ -6,11 +6,13 @@ pipeline {
             steps {
                 echo 'Hello World'
             }
-            stage('Hello universe') {
+        }
+        stage('Hello universe') {
             steps {
                 echo 'Hello universe'
             }
-            stage('Hello galaxy') {
+        }
+        stage('Hello galaxy') {
             steps {
                 echo 'Hello galaxy'
             }
