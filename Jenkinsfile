@@ -7,7 +7,7 @@ pipeline {
         TARGET_DIR = '/home/ilaya/jenkins_test/' // Change to your target directory
         CLUSTER_USER = 'ilaya' // Username for SSH
         CLUSTER_HOST = '192.168.18.139' // IP or domain of the cluster
-        SSH_CREDENTIALS_ID = '99bff17d-56a1-4006-ad8d-715cabd5d9c5' // Jenkins SSH credentials ID
+        SSH_CREDENTIALS_ID = 'ilaya-ssh-key' // Jenkins SSH credentials ID
     }
 
     stages {
