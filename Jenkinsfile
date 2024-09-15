@@ -3,39 +3,46 @@ pipeline {
     agent any
 
     environment {
-        // Define variables for your cluster and paths
-        TARGET_DIR = '/home/ilaya/jenkins_test/' // Change to your target directory
-        CLUSTER_USER = 'ilaya' // Username for SSH
-        CLUSTER_HOST = '192.168.18.139' // IP or domain of the cluster
-
+        // Define your environment variables here if needed
+        CLUSTER_PATH = '/home/ilaya/jenkins_test/'
+        REPO_URL = 'https://github.com/ilayabharathispark/pyspark.git'
     }
 
     stages {
-        stage('Clone repository') {
+        stage('Checkout') {
             steps {
-                // Clone your GitHub repository
-                git branch: 'pyspark', url: 'https://github.com/ilayabharathispark/pyspark.git'
+                // Checkout code from GitHub
+                git url: "${env.REPO_URL}", branch: 'pyspark'
             }
         }
 
-        stage('Deploy DAG and Script') {
+        stage('Deploy') {
             steps {
-                // SSH and SCP commands to transfer the folders to your Hadoop cluster
-                 script {
-                     sh """
-                    # Create target directories on the cluster if they don't exist
-                    sshpass -p 'ubuntu' ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${TARGET_DIR}/dag'
-                    sshpass -p 'ubuntu' ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${TARGET_DIR}/script'
+                script {
+                    // Define the paths for `dags` and `script` folders
+                    def dagsPath = "${env.WORKSPACE}/dags"
+                    def scriptPath = "${env.WORKSPACE}/script"
 
-                    # Copy the 'dag' and 'script' folders from the Jenkins workspace to the cluster
-                    sshpass -p 'ubuntu' scp -r ${WORKSPACE}/dag ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/dag
-                    sshpass -p 'ubuntu' scp -r ${WORKSPACE}/script ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/script
-                    """
+                    // Deploy `dags` folder
+                    sh "rsync -avz ${dagsPath}/ user@your-cluster:${env.CLUSTER_PATH}/dags/"
+
+                    // Deploy `script` folder
+                    sh "rsync -avz ${scriptPath}/ user@your-cluster:${env.CLUSTER_PATH}/script/"
                 }
             }
         }
     }
+
+    post {
+        success {
+            echo 'Deployment completed successfully.'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
+    }
 }
+
 
 
 
