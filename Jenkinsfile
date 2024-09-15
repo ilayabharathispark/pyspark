@@ -24,10 +24,10 @@ pipeline {
                     def scriptPath = "${env.WORKSPACE}/script"
 
                     // Deploy `dags` folder
-                    sh "rsync -avz ${dagsPath}/ user@your-cluster:${env.CLUSTER_PATH}/dags/"
+                    sh "rsync -avz ${dagsPath}/ ilaya@192.168.18.139:${env.CLUSTER_PATH}/dags/"
 
                     // Deploy `script` folder
-                    sh "rsync -avz ${scriptPath}/ user@your-cluster:${env.CLUSTER_PATH}/script/"
+                    sh "rsync -avz ${scriptPath}/ ilaya@192.168.18.139:${env.CLUSTER_PATH}/script/"
                 }
             }
         }
