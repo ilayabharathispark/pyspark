@@ -7,6 +7,8 @@ pipeline {
         TARGET_DIR = '/home/ilaya/jenkins_test/' // Change to your target directory
         CLUSTER_USER = 'ilaya' // Username for SSH
         CLUSTER_HOST = '192.168.18.139' // IP or domain of the cluster
+        CLUSTER_PASSWORD = credentials('CLUSTER_PASSWORD') // Use the ID of the secret text credential
+
     }
 
     stages {
@@ -21,14 +23,14 @@ pipeline {
             steps {
                 // SSH and SCP commands to transfer the folders to your Hadoop cluster
                  script {
-                    sh """
+                     sh """
                     # Create target directories on the cluster if they don't exist
-                    sshpass -p 'your-cluster-password' ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${TARGET_DIR}/dag'
-                    sshpass -p 'your-cluster-password' ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${TARGET_DIR}/script'
+                    sshpass -p '${CLUSTER_PASSWORD}' ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${TARGET_DIR}/dag'
+                    sshpass -p '${CLUSTER_PASSWORD}' ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${TARGET_DIR}/script'
 
                     # Copy the 'dag' and 'script' folders from the Jenkins workspace to the cluster
-                    sshpass -p 'your-cluster-password' scp -r ${WORKSPACE}/dag ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/dag
-                    sshpass -p 'your-cluster-password' scp -r ${WORKSPACE}/script ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/script
+                    sshpass -p '${CLUSTER_PASSWORD}' scp -r ${WORKSPACE}/dag ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/dag
+                    sshpass -p '${CLUSTER_PASSWORD}' scp -r ${WORKSPACE}/script ${CLUSTER_USER}@${CLUSTER_HOST}:${TARGET_DIR}/script
                     """
                 }
             }
