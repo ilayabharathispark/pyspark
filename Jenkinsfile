@@ -1,44 +1,23 @@
 pipeline {
     agent any
 
+
+   parameters {
+        choice(name: 'BRANCH_NAME', choices: ['main', 'pyspark', 'feature-branch'], description: 'Select the branch to build')
+    }
+
     environment {
-        CLUSTER_USER = 'ilaya'
-        CLUSTER_HOST = '192.168.18.139'
-        TARGET_DIR = '/home/ilaya/jenkins_test/'
-        SSH_CREDENTIALS_ID = 'a6026357-ee3d-4415-9c8a-4f392a72b161'
-        GIT_URL = 'https://github.com/ilayabharathispark/pyspark.git'
+        CLUSTER_USER = 'ilaya' // Replace with your cluster username
+        CLUSTER_HOST = '192.168.18.139' // Replace with your cluster IP or domain
+        TARGET_DIR = '/home/ilaya/jenkins_test/' // Replace with the target directory on your cluster
+        SSH_CREDENTIALS_ID = 'a6026357-ee3d-4415-9c8a-4f392a72b161' // Replace with your SSH credentials ID
     }
 
     stages {
-        stage('Retrieve Branches') {
-            steps {
-                script {
-                    def branches = sh(script: "git ls-remote --heads ${GIT_URL} | awk '{print \$2}' | sed 's/refs\\/heads\\///'", returnStdout: true).trim().split('\n')
-                    def branchChoices = branches.collect { it }
-
-                    // Store branches in a file to read later for parameterization
-                    writeFile file: 'branches.txt', text: branchChoices.join('\n')
-                }
-            }
-        }
-
-        stage('Dynamic Choice Parameter') {
-            steps {
-                script {
-                    def branchChoices = readFile('branches.txt').trim().split('\n')
-                    def branchName = input message: 'Select the branch to build', parameters: [choice(name: 'BRANCH_NAME', choices: branchChoices, description: 'Select the branch to build')]
-
-                    env.BRANCH_NAME = branchName
-                }
-            }
-        }
-
         stage('Clone repository') {
             steps {
-                script {
-                    // Clone the selected branch from your GitHub repository
-                    git branch: "${env.BRANCH_NAME}", url: "${env.GIT_URL}"
-                }
+                // Clone your GitHub repository
+                git branch: 'pyspark', url: 'https://github.com/ilayabharathispark/pyspark.git'
             }
         }
 
