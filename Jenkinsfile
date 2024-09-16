@@ -3,12 +3,11 @@ pipeline {
 
 
    parameters {
-    choice(name: 'BRANCH_NAME', choices: ['main', 'pyspark', 'feature-branch'], description: 'Select the branch to build')
 
     gitParameter(
                 branchFilter: 'origin/(.*)',
                 defaultValue: 'pyspark',
-                name: 'BRANCH',
+                name: 'BRANCH_NAME',
                 type:'PT_BRANCH',
                 selectedValue:'DEFAULT',
                 sortMode:'ASCENDING_SMART',
