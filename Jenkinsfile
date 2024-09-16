@@ -3,7 +3,7 @@ pipeline {
 
 
    parameters {
-        string(name: 'environment', defaultValue: 'test', description: 'Select the branch to build')
+        string(name: 'environment', defaultValue: 'test', description: 'Running environment')
         string(name: 'job', defaultValue: 'ETL', description: 'Processing with PySpark')
         string(name: 'cluster', defaultValue: 'hadoop', description: 'Single_node')
         choice(name: 'MODULE', choices: ['None', 'ModuleA', 'ModuleB', 'ModuleC'], description: 'Select the module to build')
