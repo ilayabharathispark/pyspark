@@ -3,6 +3,9 @@ pipeline {
 
 
    parameters {
+        string(name: 'environment', defaultValue: 'test', description: 'Select the branch to build')
+        string(name: 'job', defaultValue: 'ETL', description: 'Processing with PySpark')
+        string(name: 'cluster', defaultValue: 'hadoop', description: 'Single_node')
 
     gitParameter(
                 branchFilter: 'origin/(.*)',
