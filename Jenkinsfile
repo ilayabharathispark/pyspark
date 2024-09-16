@@ -3,6 +3,7 @@ pipeline {
 
 
    parameters {
+    choice(name: 'BRANCH_NAME', choices: ['main', 'pyspark', 'feature-branch'], description: 'Select the branch to build')
 
     gitParameter(
                 branchFilter: 'origin/(.*)',
@@ -28,6 +29,7 @@ pipeline {
         stage('Clone repository') {
             steps {
                 script {
+                    echo 'clone_repo'
                     def branchName = params.BRANCH_NAME
                     // Clone the selected branch from your GitHub repository
                     git branch: branchName, url: 'https://github.com/ilayabharathispark/pyspark.git'
