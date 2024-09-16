@@ -4,7 +4,7 @@ pipeline {
 
    parameters {
         choice(name: 'BRANCH_NAME', choices: ['main', 'pyspark', 'feature-branch'], description: 'Select the branch to build')
-    }
+
 
     gitParameter(
                 branchFilter: 'origin/(.*)',
@@ -17,7 +17,7 @@ pipeline {
                 useRepostories: 'https://github.com/ilayabharathispark/pyspark.git'
 
                  )
-
+}
     environment {
         CLUSTER_USER = 'ilaya' // Replace with your cluster username
         CLUSTER_HOST = '192.168.18.139' // Replace with your cluster IP or domain
