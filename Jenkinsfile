@@ -9,14 +9,14 @@ pipeline {
     gitParameter(
                 branchFilter: 'origin/(.*)',
                 defaultVaule: 'pyspark',
-                name: 'BRANCH'
-                type:'PT_BRANCH'
+                name: 'BRANCH',
+                type:'PT_BRANCH',
                 selectedValues:'DEFAULT',
                 sortMode:'ASCENDING_SMART',
-                description: 'Select Branch'
+                description: 'Select Branch',
                 useRepostories: 'https://github.com/ilayabharathispark/pyspark.git'
 
-    )
+                 )
 
     environment {
         CLUSTER_USER = 'ilaya' // Replace with your cluster username
