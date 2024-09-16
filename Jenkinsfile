@@ -8,13 +8,13 @@ pipeline {
 
     gitParameter(
                 branchFilter: 'origin/(.*)',
-                defaultVaule: 'pyspark',
+                defaultValue: 'pyspark',
                 name: 'BRANCH',
                 type:'PT_BRANCH',
-                selectedValues:'DEFAULT',
+                selectedValue:'DEFAULT',
                 sortMode:'ASCENDING_SMART',
                 description: 'Select Branch',
-                useRepostories: 'https://github.com/ilayabharathispark/pyspark.git'
+                useRepository: 'https://github.com/ilayabharathispark/pyspark.git'
 
                  )
 }
