@@ -8,7 +8,7 @@ pipeline {
         string(name: 'cluster', defaultValue: 'hadoop', description: 'Single_node')
         choice(name: 'MODULE', choices: ['None', 'ModuleA', 'ModuleB', 'ModuleC'], description: 'Select the module to build')
 
-
+    // dynamically branches will reflect in jenkins whenever we create new branch
     gitParameter(
                 branchFilter: 'origin/(.*)',
                 defaultValue: 'pyspark',
