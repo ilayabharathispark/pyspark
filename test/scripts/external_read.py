@@ -17,3 +17,5 @@ print("---Read_files_from_HDFS---")
 hadoop_read = spark.read.option("header","true").csv("hdfs://localhost:50000/ilaya/spark_test.csv")
 hadoop_read.show()
 
+# write to hdfs as parquet
+hadoop_read.write.parquet("hdfs://localhost:50000/ilaya/spark_test.parquet")

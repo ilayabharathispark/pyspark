@@ -6,7 +6,7 @@ pipeline {
         string(name: 'environment', defaultValue: 'test', description: 'Running environment')
         string(name: 'job', defaultValue: 'ETL', description: 'Processing with PySpark')
         string(name: 'cluster', defaultValue: 'hadoop', description: 'Single_node')
-        choice(name: 'MODULE', choices: ['None', 'ModuleA', 'ModuleB', 'ModuleC'], description: 'Select the module to build')
+        choice(name: 'MODULE', choices: ['test', 'pyspark_etl'], description: 'Select the module to build')
 
     // dynamically branches will reflect in jenkins whenever we create new branch
     gitParameter(
@@ -61,8 +61,8 @@ pipeline {
                     ssh ${CLUSTER_USER}@${CLUSTER_HOST} 'mkdir -p ${PYSPARK_SCRIPT_TARGET_DIR}/scripts'
 
                     # Copy the files from 'dag' and 'script' folders from the Jenkins workspace to the cluster
-                    scp -r ${WORKSPACE}/dags/* ${CLUSTER_USER}@${CLUSTER_HOST}:${DAG_TARGET_DIR}/dags
-                    scp -r ${WORKSPACE}/scripts/* ${CLUSTER_USER}@${CLUSTER_HOST}:${PYSPARK_SCRIPT_TARGET_DIR}/scripts
+                    scp -r ${WORKSPACE}/${MODULE}/dags/* ${CLUSTER_USER}@${CLUSTER_HOST}:${DAG_TARGET_DIR}/dags
+                    scp -r ${WORKSPACE}/${MODULE}/scripts/* ${CLUSTER_USER}@${CLUSTER_HOST}:${PYSPARK_SCRIPT_TARGET_DIR}/scripts
                     """
                 }
             }
