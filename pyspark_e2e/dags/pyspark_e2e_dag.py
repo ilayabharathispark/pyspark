@@ -1,17 +1,16 @@
-from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.operators.dummy import DummyOperator
-from airflow.operators.email import EmailOperator  # Import the EmailOperator
-from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from airflow import DAG # type: ignore
+from airflow.operators.python import PythonOperator # type: ignore
+from airflow.operators.dummy import DummyOperator # type: ignore
+from airflow.operators.email import EmailOperator  # type: ignore # Import the EmailOperator
+from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator # type: ignore
 from datetime import datetime
-from airflow.exceptions import AirflowException
-
+from airflow.exceptions import AirflowException # type: ignore
 
 
 
 def on_failure_callback(context):
     # Import necessary modules
-    from airflow.utils.email import send_email
+    from airflow.utils.email import send_email # type: ignore
     
     # Extract relevant information from the context
     task_instance = context['task_instance']
@@ -29,6 +28,7 @@ def on_failure_callback(context):
     </ul>
     """
     
+
     # Send email
     send_email('ilayabharathi334@gmail.com', subject, html_content)
 
