@@ -43,7 +43,7 @@ default_args = {
 with DAG(
     dag_id='e2e_test',
     default_args=default_args,
-    schedule_interval='* * * * *',  # Run every 1 minute
+    schedule_interval='*/15 * * * *',  # Run every 15 minutes
     catchup=False,  # Don't run historical jobs
     tags=['pyspark_e2e'],
 ) as dag:
