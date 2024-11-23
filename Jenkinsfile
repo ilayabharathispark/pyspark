@@ -10,7 +10,7 @@ pipeline {
     // dynamically branches will reflect in jenkins whenever we create new branch
     gitParameter(
                 branchFilter: 'origin/(.*)',
-                defaultValue: 'pyspark',
+                defaultValue: 'pyspark_e2e',
                 name: 'BRANCH_NAME',
                 type:'PT_BRANCH',
                 selectedValue:'DEFAULT',
