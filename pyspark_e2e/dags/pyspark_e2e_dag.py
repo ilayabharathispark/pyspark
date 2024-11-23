@@ -59,7 +59,6 @@ spark_job = SparkSubmitOperator(
     application='/home/ilaya/pyspark/pyspark_e2e.py',  # Path to your Spark application
     conn_id='spark_e2e',  # Connection ID configured in Airflow
     conf={
-        'spark.master': 'spark://spark-master:7077',
         'spark.executor.memory': '2g',
         'spark.driver.memory': '1g',
         'spark.executor.cores': '1',
