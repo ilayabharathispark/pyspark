@@ -53,16 +53,17 @@ with DAG(
         task_id='start',
     )
 
- # Configuration for Spark job
+# Configuration for Spark job in local mode
 spark_job = SparkSubmitOperator(
     task_id='spark_submit_task',
-    application='/home/ilaya/pyspark/scripts/pyspark_e2e.py',  # Path to your Spark application
+    application='/home/ilaya/pyspark/pyspark_e2e.py',  # Path to your Spark application
     conn_id='spark_e2e',  # Connection ID configured in Airflow
     conf={
+        'spark.master': 'local[*]',  # Local mode
         'spark.executor.memory': '2g',
         'spark.driver.memory': '1g',
         'spark.executor.cores': '1',
-        'spark.num.executors': '2'
+        'spark.num.executors': '1'  # Executors in local mode don't apply; 1 thread per core
     },
     on_failure_callback=on_failure_callback,
     dag=dag
