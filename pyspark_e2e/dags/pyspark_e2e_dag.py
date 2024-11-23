@@ -56,7 +56,7 @@ with DAG(
  # Configuration for Spark job
 spark_job = SparkSubmitOperator(
     task_id='spark_submit_task',
-    application='/home/ilaya/pyspark/pyspark_e2e.py',  # Path to your Spark application
+    application='/home/ilaya/pyspark/scripts/pyspark_e2e.py',  # Path to your Spark application
     conn_id='spark_e2e',  # Connection ID configured in Airflow
     conf={
         'spark.executor.memory': '2g',
