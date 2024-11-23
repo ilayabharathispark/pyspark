@@ -6,7 +6,7 @@ pipeline {
         string(name: 'environment', defaultValue: 'test', description: 'Running environment')
         string(name: 'job', defaultValue: 'ETL', description: 'Processing with PySpark')
         string(name: 'cluster', defaultValue: 'hadoop', description: 'Single_node')
-        choice(name: 'MODULE', choices: ['test', 'pyspark_etl', 'pyspark_e2e', 'pyspark_e2e_copy'], description: 'Select the module to build')
+        choice(name: 'MODULE', choices: ['pyspark_etl', 'pyspark_e2e', 'ilaya'], description: 'Select the module to build')
 
     // dynamically branches will reflect in jenkins whenever we create new branch
     gitParameter(
