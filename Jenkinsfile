@@ -26,7 +26,7 @@ pipeline {
         CLUSTER_HOST = '192.168.18.139' // Replace with your cluster IP or domain
         DAG_TARGET_DIR = '/home/ilaya/airflow/' // Replace with the DAG_TARGET_DIR on your cluster
         PYSPARK_SCRIPT_TARGET_DIR = '/home/ilaya/pyspark/' // Replace with the PYSPARK_SCRIPT_TARGET_DIR on your cluster
-        SSH_CREDENTIALS_ID = 'e010fc6b-6ba4-4b36-95a4-95602467bcf7' // Replace with your SSH credentials ID
+        SSH_CREDENTIALS_ID = '8faba658-838b-4080-817e-ab83b0750a72'//'e010fc6b-6ba4-4b36-95a4-95602467bcf7' // Replace with your SSH credentials ID
     }
 
     stages {
