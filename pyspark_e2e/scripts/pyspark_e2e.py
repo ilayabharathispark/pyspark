@@ -31,7 +31,7 @@ spark.sql("select * from test WHERE NAME = 'ilaya'").show()
 # rename columns age to Age
 df = df.withColumnRenamed("age","Age")
 
-# d write parquet
+
 df.agg({"Age": "max"}).show()
 
 df.show()
