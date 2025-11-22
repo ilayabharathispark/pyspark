@@ -35,7 +35,7 @@ def on_failure_callback(context):
 # Default arguments for the DAG
 default_args = {
     'owner': 'airflow',
-    'start_date': datetime(2023, 9, 1),
+    'start_date': datetime(2025, 11, 18),
     'retries': 1,
 }
 
