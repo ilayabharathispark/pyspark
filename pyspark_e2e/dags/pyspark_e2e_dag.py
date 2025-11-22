@@ -41,7 +41,7 @@ default_args = {
 
 # Define the DAG
 with DAG(
-    dag_id='e2e_test',
+    dag_id='e2e_spark_dag',
     default_args=default_args,
     schedule_interval='*/15 * * * *',  # Run every 15 minutes
     catchup=False,  # Don't run historical jobs
