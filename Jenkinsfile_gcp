@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+
+    environment {
+        // Hardcoded path to the service account JSON as requested
+        SA_PATH = '/home/ilaya/Downloads/ilaya-bharathi-murugan-fb0956761a07.json'
+    }
+
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'pyspark', description: 'Git branch to build')
+        choice(name: 'MODULE', choices: ['pyspark_etl', 'pyspark_e2e', 'ilaya'], description: 'Select module to copy')
+        string(name: 'GCS_BUCKET', defaultValue: '', description: 'Target GCS bucket name (e.g. my-bucket)')
+        string(name: 'PROJECT_ID', defaultValue: '', description: 'Optional GCP project id')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    echo "Checking out branch: ${params.BRANCH_NAME}"
+                    git branch: params.BRANCH_NAME, url: 'https://github.com/ilayabharathispark/pyspark.git'
+                }
+            }
+        }
+
+                stage('GCP Authenticate') {
+                        steps {
+                                script {
+                                        sh '''
+                                        set -e
+                                        echo "Using service account at: ${SA_PATH}"
+                                        if [ ! -f "${SA_PATH}" ]; then
+                                            echo "Service account file not found at ${SA_PATH}"; exit 1
+                                        fi
+
+                                        # Authenticate
+                                        gcloud auth activate-service-account --key-file="${SA_PATH}"
+
+                                        # Optionally set project
+                                        if [ -n "${PROJECT_ID}" ]; then
+                                            gcloud config set project "${PROJECT_ID}"
+                                        fi
+                                        '''
+                                }
+                        }
+                }
+
+                stage('Authenticate and Copy to GCS') {
+                        steps {
+                                script {
+                                        sh '''
+                                        set -e
+                                        echo "Copying module ${MODULE} from branch ${BRANCH_NAME} to GCS
+                                        SRC_DIR="${WORKSPACE}/${MODULE}/scripts"                           
+                                        DEST="gs://${GCS_BUCKET}/gcp_cicd/"
+                                        echo "Copying contents of ${SRC_DIR} to ${DEST}"
+                                        gsutil -m cp -r "${SRC_DIR}/*" "${DEST}"
+                                        echo "Copy complete"
+                                        '''
+                                }
+                        }
+                }
+    }
+
+    post {
+        success {
+            echo 'Authentication and file copy succeeded.'
+        }
+        failure {
+            echo 'Authentication or file copy failed.'
+        }
+    }
+}
+
+/*
+Simplified notes:
+- The pipeline uses a hardcoded service account path (`/var/lib/jenkins/serviceaccount.json`).
+- It authenticates with `gcloud` and copies the selected module directory to the specified GCS bucket.
+- Ensure `gcloud` and `gsutil` are installed on the Jenkins agent and that the service account file exists at the hardcoded location.
+*/
