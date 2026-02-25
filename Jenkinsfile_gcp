@@ -50,11 +50,11 @@ pipeline {
                                 script {
                                         sh '''
                                         set -e
-                                        echo "Copying module ${MODULE} from branch ${BRANCH_NAME} to GCS
-                                        SRC_DIR="${WORKSPACE}/${MODULE}/scripts"                           
+                                        echo "Copying module ${MODULE} from branch ${BRANCH_NAME} to GCS"
+                                        SRC_DIR="${WORKSPACE}/${MODULE}/scripts"
                                         DEST="gs://${GCS_BUCKET}/gcp_cicd/"
                                         echo "Copying contents of ${SRC_DIR} to ${DEST}"
-                                        gsutil -m cp -r "${SRC_DIR}/*" "${DEST}"
+                                        gsutil -m cp -r "${SRC_DIR}"/* "${DEST}"
                                         echo "Copy complete"
                                         '''
                                 }
