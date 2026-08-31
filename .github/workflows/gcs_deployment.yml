@@ -1,1 +1,32 @@
+name: Deploy to GCS
 
+on: 
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Authenticate with GCS
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Deploy dags folder to GCS
+        run: |
+          gsutil -m cp -r pyspark_etl/dags/* gs://${{ secrets.GCS_BUCKET_NAME }}/dags/
+
+      - name: Deploy scripts folder to GCS
+        run: |
+          gsutil -m cp -r pyspark_etl/scripts/* gs://${{ secrets.GCS_BUCKET_NAME }}/scripts/
+
+      - name: Verify deployment
+        run: |
+          echo "Files deployed to GCS:"
+          gsutil ls -r gs://${{ secrets.GCS_BUCKET_NAME }}/
